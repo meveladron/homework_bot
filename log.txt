@@ -5,3 +5,9 @@
 2023-04-19 23:56:02,200,INFO,/home/meveladron/Dev/homework_bot/homework.py,homework.py,get_api_answer,53,Начало запроса: url = https://practicum.yandex.ru/api/user_api/homework_statuses/,headers = {'Authorization': 'OAuth y0_AgAAAABln_w-AAYckQAAAADf22kp5NM52Vf9RUOGCgVO5-G8cgjMuTE'},params = {'from_date': 1681937762}
 2023-04-19 23:56:02,648,INFO,/home/meveladron/Dev/homework_bot/homework.py,homework.py,send_message,32,Начало отправки
 2023-04-19 23:56:02,649,INFO,/home/meveladron/Dev/homework_bot/homework.py,homework.py,send_message,41,Сообщение отправлено  , Нет новых статусов работ.
+2023-04-20 00:08:47,889,INFO,/home/meveladron/Dev/homework_bot/homework.py,homework.py,get_api_answer,53,Начало запроса: url = https://practicum.yandex.ru/api/user_api/homework_statuses/,headers = {'Authorization': 'OAuth y0_AgAAAABln_w-AAYckQAAAADf22kp5NM52Vf9RUOGCgVO5-G8cgjMuTE'},params = {'from_date': 1681938527}
+2023-04-20 00:08:47,890,DEBUG,/home/meveladron/Dev/homework_bot/venv/lib/python3.9/site-packages/urllib3/connectionpool.py,connectionpool.py,_new_conn,1003,Starting new HTTPS connection (1): practicum.yandex.ru:443
+2023-04-20 00:08:48,329,DEBUG,/home/meveladron/Dev/homework_bot/venv/lib/python3.9/site-packages/urllib3/connectionpool.py,connectionpool.py,_make_request,456,https://practicum.yandex.ru:443 "GET /api/user_api/homework_statuses/?from_date=1681938527 HTTP/1.1" 200 42
+2023-04-20 00:08:48,331,DEBUG,/home/meveladron/Dev/homework_bot/homework.py,homework.py,check_response,74,Начало проверки
+2023-04-20 00:08:48,331,INFO,/home/meveladron/Dev/homework_bot/homework.py,homework.py,send_message,32,Начало отправки
+2023-04-20 00:08:48,332,INFO,/home/meveladron/Dev/homework_bot/homework.py,homework.py,send_message,41,Сообщение отправлено  , Нет новых статусов работ.
