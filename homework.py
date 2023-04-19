@@ -42,7 +42,7 @@ logger.addHandler(handler_recorder)
 def send_message(bot, message):
     """Отправляет сообщение в Telegram чат."""
     try:
-        logging.info('Отправка сообщения')
+        logging.info('Началась отправка')
         bot.send_message(
             chat_id=TELEGRAM_CHAT_ID,
             text=message,
