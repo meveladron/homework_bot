@@ -85,19 +85,20 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """Распарсить ответ."""
-    if 'homework_name' not in homework:
-        raise KeyError('В ответе отсутсвует ключ homework_name')
-    name_homework = homework.get('homework_name')
-    homework_status = homework.get('status')
+    """Извлечение статуса работы."""
+    homework_name = homework.get("homework_name")
+    homework_status = homework.get("status")
+    verdict = HOMEWORK_VERDICTS[homework_status]
+    if not verdict:
+        message_verdict = "Такого статуса нет в словаре"
+        raise KeyError(message_verdict)
     if homework_status not in HOMEWORK_VERDICTS:
-        raise ValueError(f'Неизвестный статус работы - {homework_status}')
-    return(
-        'Изменился статус проверки работы "{name_homework}" {verdict}'
-    ).format(
-        name_homework=name_homework,
-        verdict=HOMEWORK_VERDICTS[homework_status]
-    )
+        message_homework_status = "Такого статуса не существует"
+        raise KeyError(message_homework_status)
+    if "homework_name" not in homework:
+        message_homework_name = "Такого имени не существует"
+        raise KeyError(message_homework_name)
+    return f'Изменился статус проверки работы "{homework_name}". {verdict}'
 
 
 def parse_status(homework):
