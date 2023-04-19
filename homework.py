@@ -115,8 +115,10 @@ def main():
     logger.info("Starting")
     if not check_tokens():
         logger.error('Отсутствуют обязательные переменные')
-        sys.exit('Отсутствие обязательных переменных '
-                 'окружения во время запуска бота')
+        sys.exit(
+            'Отсутствие обязательных переменных '
+            'окружения во время запуска бота'
+        )
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
 
     current_timestamp = int(time.time())
@@ -135,7 +137,7 @@ def main():
                     message = current_status
                     send_message(bot, message)
             else:
-                logger.debug('В ответе отсутствуют новые статусы')
+                logger.debug('Отсутствие новых статусов')
         except Exception as error:
             message = f'Программа работает некорректно: {error}'
             send_message(bot, message)
