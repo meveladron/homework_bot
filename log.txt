@@ -1,0 +1,7 @@
+2023-04-19 23:47:06,963, CRITICAL, /home/meveladron/Dev/homework_bot/homework.py, homework.py, main,  109, Отсутствует необходимое кол-во переменных окружения
+2023-04-19 23:48:18,566, INFO, /home/meveladron/Dev/homework_bot/homework.py, homework.py, get_api_answer,  53, Начало запроса: url = https://practicum.yandex.ru/api/user_api/homework_statuses/,headers = {'Authorization': 'OAuth y0_AgAAAABln_w-AAYckQAAAADf22kp5NM52Vf9RUOGCgVO5-G8cgjMuTE'},params = {'from_date': 1681937298}
+2023-04-19 23:48:18,942, INFO, /home/meveladron/Dev/homework_bot/homework.py, homework.py, send_message,  32, Начало отправки
+2023-04-19 23:48:18,943, INFO, /home/meveladron/Dev/homework_bot/homework.py, homework.py, send_message,  41, Сообщение отправлено  , Нет новых статусов работ.
+2023-04-19 23:56:02,200,INFO,/home/meveladron/Dev/homework_bot/homework.py,homework.py,get_api_answer,53,Начало запроса: url = https://practicum.yandex.ru/api/user_api/homework_statuses/,headers = {'Authorization': 'OAuth y0_AgAAAABln_w-AAYckQAAAADf22kp5NM52Vf9RUOGCgVO5-G8cgjMuTE'},params = {'from_date': 1681937762}
+2023-04-19 23:56:02,648,INFO,/home/meveladron/Dev/homework_bot/homework.py,homework.py,send_message,32,Начало отправки
+2023-04-19 23:56:02,649,INFO,/home/meveladron/Dev/homework_bot/homework.py,homework.py,send_message,41,Сообщение отправлено  , Нет новых статусов работ.

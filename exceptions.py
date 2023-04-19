@@ -1,18 +1,28 @@
-class HTTPStatusError(Exception):
-    """Вызывается когда API не вернула статус код 200."""
+class NoSend(Exception):
+    """Не для отправки в телеграм."""
     pass
 
 
-class UncorrectDataAPI(Exception):
-    """Некоректные данные в ответе API."""
+class ProblemDescriptions(Exception):
+    """Описания проблемы."""
     pass
 
 
-class ErrorServer(Exception):
-    """Невозможно подключится к серверу."""
+class InvalidResponseCode(Exception):
+    """Некорректный код ответа."""
     pass
 
 
-class SendError(Exception):
-    """Ошибка при отправке сообщения."""
+class ConnectinError(Exception):
+    """Некорректный код ответа."""
+    pass
+
+
+class EmptyResponseFromAPI(NoSend):
+    """Ответ от API пуст."""
+    pass
+
+
+class TelegramError(NoSend):
+    """Telegram error."""
     pass
