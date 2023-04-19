@@ -40,18 +40,13 @@ logger.addHandler(handler_recorder)
 
 
 def send_message(bot, message):
-    """Отправляет сообщение в Telegram чат."""
-    try:
-        logging.info('Началась отправка')
-        bot.send_message(
-            chat_id=TELEGRAM_CHAT_ID,
-            text=message,
-        )
-    except exceptions.TelegramError as error:
-        raise exceptions.TelegramError(
-            f'Не удалось отправить сообщение {error}')
+    """Отправляет сообщение."""
+    logger.info(f"Начало отправки сообщения: {message}")
+    bot_message = bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
+    if not bot_message:
+        raise telegram.TelegramError("Сообщение не отправлено")
     else:
-        logging.info(f'Сообщение отправлено {message}')
+        logger.info(f"Сообщение отправлено: {message}")
 
 
 def get_api_answer(current_timestamp):
