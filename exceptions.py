@@ -1,28 +1,22 @@
-class NoSend(Exception):
-    """Не для отправки в телеграм."""
+class NotForSendError(Exception):
+    """Не для пересылки в Телеграм"."""
+
     pass
 
 
-class ProblemDescriptions(Exception):
-    """Описания проблемы."""
+class EmptyResponseError(NotForSendError):
+    """Ответ от API пустой"""
+
     pass
 
 
-class InvalidResponseCode(Exception):
-    """Некорректный код ответа."""
+class TelegramSendError(NotForSendError):
+    """Ошибка отправки сообщения в Телеграм"""
+
     pass
 
 
-class ConnectinError(Exception):
-    """Некорректный код ответа."""
-    pass
+class InvalidResponseCodeError(Exception):
+    """Неверный код ответа API"""
 
-
-class EmptyResponseFromAPI(NoSend):
-    """Ответ от API пуст."""
-    pass
-
-
-class TelegramError(NoSend):
-    """Telegram error."""
     pass
