@@ -1,16 +1,28 @@
-class TokenNotFoundException(Exception):
-    """Обработка исключения при отсуствии хотя бы одного из токенов."""
+class NoMessageToTelegram(Exception):
+    """Класс для исключения отправки сообщения в телеграм."""
 
     pass
 
 
-class ChatNotFoundException(Exception):
-    """Обработка исключения при неверном chat_id."""
+class TelegramMessageError(NoMessageToTelegram):
+    """Ошибка при отправке сообщения в телеграм."""
 
     pass
 
 
-class EndPointIsNotAvailiable(Exception):
-    """Обработка исключения при недоступности ENDPOINT API."""
+class JSONError(Exception):
+    """Ошибка при декодировании сообщения JSON."""
+
+    pass
+
+
+class RequestAPIError(Exception):
+    """Ошибка при запросе к API."""
+
+    pass
+
+
+class CurrentDateError(NoMessageToTelegram):
+    """Ошибка при отсутствии current_date в ответе API."""
 
     pass
