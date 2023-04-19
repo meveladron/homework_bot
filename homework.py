@@ -101,26 +101,6 @@ def parse_status(homework):
     return f'Изменился статус проверки работы "{homework_name}". {verdict}'
 
 
-def parse_status(homework):
-    """Извлечение из словаря статуса работы."""
-    if not isinstance(homework, dict):
-        raise TypeError('homework '
-                        'не словарь')
-    if 'status' not in homework.keys():
-        raise KeyError('в homework '
-                       'отсутствует ключ status')
-    if 'name_homework' not in homework.keys():
-        raise KeyError('в homework '
-                       'отсутствует ключ name_homework')
-    name_homework = homework['name_homework']
-    status_homework = homework['status']
-    if status_homework not in HOMEWORK_VERDICTS.keys():
-        raise KeyError(f'{status_homework} не является '
-                       'ключом для HOMEWORK_STATUSES')
-    verdict = HOMEWORK_VERDICTS[status_homework]
-    return f'Изменился статус проверки работы "{name_homework}". {verdict}'
-
-
 def check_tokens() -> bool:
     """Проверяет наличие переменных в локальном хранилище."""
     token_list = all([PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID])
