@@ -122,7 +122,7 @@ def check_tokens():
 def main():
     """Основная логика работы бота."""
     if not check_tokens():
-        logger.critical('Ошибка, отсутствуют переменные окружения')
+        logger.critical('Отсутствуют переменные окружения')
         exit()
 
     current_timestamp = int(time())
