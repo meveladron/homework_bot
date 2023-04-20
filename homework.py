@@ -38,6 +38,7 @@ logger.addHandler(
     logging.StreamHandler()
 )
 
+
 def check_tokens():
     """Функция для проверки доступности переменных окружения."""
     return all(
