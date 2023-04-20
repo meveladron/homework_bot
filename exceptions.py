@@ -1,14 +1,18 @@
-class HomeworkApiError(Exception):
+class TokenError(Exception):
+    """Ошибка токенов."""
     pass
 
 
-class APIStatusCodeError(Exception):
+class HomeworksKeyError(Exception):
+    """В ответе API домашки нет ключа homeworks."""
     pass
 
 
-class EndPointError(Exception):
+class MissedKeyException(Exception):
+    """."""
     pass
 
 
-class StatusTypeError(Exception):
+class WrongDataFormat(Exception):
+    """."""
     pass

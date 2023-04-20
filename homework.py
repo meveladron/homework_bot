@@ -1,8 +1,9 @@
-from http import HTTPStatus
 import logging
 import os
 import time
+from http import HTTPStatus
 
+import exceptions
 import requests
 import telegram
 from dotenv import load_dotenv
@@ -25,15 +26,6 @@ HOMEWORK_VERDICTS = {
     'rejected': 'Работа проверена: у ревьюера есть замечания.'
 }
 
-MESSAGE = 'Ошбика при запросе к API'
-NOT_HOMEWORKS = 'Нет ключа homeworks'
-HOMEWORK_LIST = 'Список с домашками пуст'
-HOMEWORK_STATUS = 'Ключа нет в словаре'
-NOT_CURRENT_DATE = 'Нет current_date'
-NOT_HOMEWORK_LIST = 'Ошибка типа данных в homework'
-NOT_KEY = 'Отсутствует ключ'
-STATUS = 'Отсутствует статус в homeworks'
-TYPE_HOMEWORK_LIST = 'Ошибка типа данных в homework_list'
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -46,26 +38,11 @@ logger.addHandler(
     logging.StreamHandler()
 )
 
-
-class TokenError(Exception):
-    """Ошибка токенов."""
-
-
-class HomeworksKeyError(Exception):
-    """В ответе API домашки нет ключа homeworks."""
-
-
-class MissedKeyException(Exception):
-    """."""
-
-
-class WrongDataFormat(Exception):
-    """."""
-
-
 def check_tokens():
     """Функция для проверки доступности переменных окружения."""
-    return all([PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID])
+    return all(
+        [PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]
+    )
 
 
 def send_message(bot, message):
@@ -92,8 +69,8 @@ def get_api_answer(timestamp):
             params=params
         )
         if homework_status.status_code != HTTPStatus.OK:
-            logger.error(MESSAGE)
-            raise Exception(MESSAGE)
+            logger.error('Ошбика при запросе к API')
+            raise Exception('Ошбика при запросе к API')
         return homework_status.json()
     except Exception as Error:
         logger.error(f'Ошибка {Error} при запросе к API')
@@ -103,25 +80,25 @@ def get_api_answer(timestamp):
 def check_response(response):
     """Функция для проверки ответа API на корректность."""
     if type(response) is not dict:
-        logger.error(STATUS)
-        raise TypeError(STATUS)
+        logger.error('Отсутствует статус в homeworks')
+        raise TypeError('Отсутствует статус в homeworks')
     if 'homeworks' not in response.keys():
-        logger.error(NOT_KEY)
-        raise KeyError(NOT_KEY)
+        logger.error('Отсутствие ключа')
+        raise KeyError('Отсутствие ключа')
     if 'current_date' not in response.keys():
-        logger.error(NOT_CURRENT_DATE)
-        raise KeyError(NOT_CURRENT_DATE)
+        logger.error('Нет current_date')
+        raise KeyError('Нет current_date')
     if type(response['homeworks']) is not list:
-        logger.error(HOMEWORK_LIST)
-        raise TypeError(HOMEWORK_LIST)
+        logger.error('Список с домашними работами пуст')
+        raise TypeError('Список с домашними работами пуст')
     return response['homeworks'][0]
 
 
 def parse_status(homework):
     """Функция для проверки статуса о выполнении ДЗ."""
     if not isinstance(homework, dict):
-        logger.error(NOT_HOMEWORK_LIST)
-        raise KeyError(NOT_HOMEWORK_LIST)
+        logger.error('Ошибка типа данных в homework')
+        raise KeyError('Ошибка типа данных в homework')
     homework_name = homework.get('homework_name')
     homework_status = homework.get('status')
     if homework_name is None:
@@ -129,8 +106,8 @@ def parse_status(homework):
     if homework_status is None:
         raise Exception(f'homework_status отсутствует {homework_status}')
     if homework_status not in HOMEWORK_VERDICTS:
-        logger.error(HOMEWORK_STATUS)
-        raise KeyError(HOMEWORK_STATUS)
+        logger.error('Ключ отсутствует в словаре')
+        raise KeyError('Ключ отсутствует в словаре')
     verdict = HOMEWORK_VERDICTS[homework_status]
     return f'Изменился статус проверки работы "{homework_name}". {verdict}'
 
@@ -138,8 +115,8 @@ def parse_status(homework):
 def main():
     """Основная логика работы бота."""
     if not check_tokens():
-        logger.critical('Отсутствие обязательных переменных окружения')
-        raise TokenError('Ошибка токенов')
+        logger.critical('Необходимые переменные окружения отсутствуют')
+        raise exceptions.TokenError('Tokens Error')
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     timestamp = int(time.time())
     last_message = ''
