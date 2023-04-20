@@ -47,15 +47,17 @@ def check_tokens():
 
 
 def send_message(bot, message):
-    """Отправка сообщения об изменении статуса работы в Telegram."""
+    """Функция для отправки сообщения в чат Telegram."""
     try:
         bot.send_message(TELEGRAM_CHAT_ID, message)
-    except Exception as telegram_error:
-        message = (f'Сбой в работе программы: Отправка сообщения в чат не'
-                   f'удалась. {telegram_error}')
-        logging.error(message)
-    else:
-        logging.info(f'Сообщение успешно отправлено: "{message}"')
+        logger.debug(
+            f'Сообщение в чат отправлено: {message}'
+        )
+        return True
+    except telegram.TelegramError as telegram_error:
+        logger.error(
+            f'Сообщение в чат не отправлено: {telegram_error}'
+        )
 
 
 def get_api_answer(timestamp):
@@ -77,17 +79,20 @@ def get_api_answer(timestamp):
 
 
 def check_response(response):
-    """Проверяет ответ API на корректность."""
-    if not isinstance(response, dict):
-        raise TypeError(f'response не dict, a {type(response)}')
-    if 'homeworks' not in response:
-        raise KeyError('В ответе API отсутствует ключ homeworks')
-    if 'current_date' not in response:
-        raise KeyError('В ответе API отсутсвует ключ current_date')
-    homeworks = response['homeworks']
-    if not isinstance(homeworks, list):
-        raise TypeError(f'response не dict, a {type(homeworks)}')
-    return homeworks
+    """Функция для проверки ответа API на корректность."""
+    if type(response) is not dict:
+        logger.error('Отсутствует статус в homeworks')
+        raise TypeError('Отсутствует статус в homeworks')
+    if 'homeworks' not in response.keys():
+        logger.error('Отсутствие ключа')
+        raise KeyError('Отсутствие ключа')
+    if 'current_date' not in response.keys():
+        logger.error('Нет current_date')
+        raise KeyError('Нет current_date')
+    if type(response['homeworks']) is not list:
+        logger.error('Список с домашними работами пуст')
+        raise TypeError('Список с домашними работами пуст')
+    return response['homeworks'][0]
 
 
 def parse_status(homework):
