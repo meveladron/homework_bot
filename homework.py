@@ -103,10 +103,9 @@ def check_response(response):
     if 'current_date' not in response.keys():
         logger.error('Нет current_date')
         raise KeyError('Нет current_date')
-    if type(response['homeworks']) is not list:
+    if not isinstance(homeworks_response, dict):
         logger.error('Список с домашними работами пуст')
         raise TypeError('Список с домашними работами пуст')
-    return homeworks_response
 
 
 def parse_status(homework):
