@@ -9,7 +9,6 @@ import requests
 import telegram
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 
@@ -44,9 +43,9 @@ logger.addHandler(
 def check_tokens():
     """Функция для проверки доступности переменных окружения."""
     tokens = {
-         'practicum_token': PRACTICUM_TOKEN,
-         'telegram_token': TELEGRAM_TOKEN,
-         'telegram_chat_id': TELEGRAM_CHAT_ID
+            'practicum_token': PRACTICUM_TOKEN,
+            'telegram_token': TELEGRAM_TOKEN,
+            'telegram_chat_id': TELEGRAM_CHAT_ID
     }
     for token_key, token_value in tokens.items():
         if token_value is None:
