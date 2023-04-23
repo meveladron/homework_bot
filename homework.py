@@ -92,20 +92,18 @@ def get_api_answer(timestamp):
         raise Exception(f'API error: {error}')
 
 
-def check_response(response):
+def check_response(response: dict) -> list:
     """Проверяет полученный ответ на корректность."""
-    logger.info("Ответ от сервера получен")
-    homeworks_response = response['homeworks']
-    logger.info("Список домашних работ получен")
-    if 'homeworks' not in response:
-        logger.error('Отсутствие ключа')
-        raise KeyError('Отсутствие ключа')
-    if 'current_date' not in response.keys():
-        logger.error('Нет current_date')
-        raise KeyError('Нет current_date')
-    if not isinstance(homeworks_response, dict):
-        logger.error('Список с домашними работами пуст')
+    if not isinstance(response, dict):
+        raise TypeError('ответ должен быть словарём')
+    if 'homeworks' and 'current_date' not in response:
+        raise KeyError('API вернул неверное значение')
+    homeworks = response['homeworks']
+    if not isinstance(homeworks, list):
+        raise TypeError('Тип значения "homeworks" не список')
+    if not homeworks:
         raise TypeError('Список с домашними работами пуст')
+    return homeworks
 
 
 def parse_status(homework):

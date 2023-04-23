@@ -16,3 +16,8 @@ class MissedKeyException(Exception):
 class WrongDataFormat(Exception):
     """Некорректные данные."""
     pass
+
+
+class HomeWorkIsEmpty(Exception):
+    """Список домашних работ пуст"""
+    pass
