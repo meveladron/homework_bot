@@ -9,10 +9,10 @@ class HomeworksKeyError(Exception):
 
 
 class MissedKeyException(Exception):
-    """."""
+    """Неверное значение ключа homeworks."""
     pass
 
 
 class WrongDataFormat(Exception):
-    """."""
+    """Некорректные данные."""
     pass

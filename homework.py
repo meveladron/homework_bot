@@ -2,6 +2,7 @@ import logging
 import os
 import time
 from http import HTTPStatus
+from json import JSONDecodeError
 
 import exceptions
 import requests
@@ -41,9 +42,16 @@ logger.addHandler(
 
 def check_tokens():
     """Функция для проверки доступности переменных окружения."""
-    return all(
-        [PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]
-    )
+    tokens_dict = {
+        'PRACTICUM_TOKEN': PRACTICUM_TOKEN,
+        'TELEGRAM_TOKEN': TELEGRAM_TOKEN,
+        'TELEGRAM_CHAT_ID': TELEGRAM_CHAT_ID
+    }
+    for tokens in tokens_dict:
+        if tokens not in globals():
+            logger.critical('Отсутствует один, или несколько токенов')
+            return False
+        return True
 
 
 def send_message(bot, message):
@@ -73,17 +81,23 @@ def get_api_answer(timestamp):
             logger.error('Ошбика при запросе к API')
             raise Exception('Ошбика при запросе к API')
         return homework_status.json()
-    except Exception as Error:
-        logger.error(f'Ошибка {Error} при запросе к API')
-        raise Exception(f'Ошибка {Error}')
+    except requests.exceptions.RequestException:
+        logger.error('Эндпоинт не найден')
+        raise Exception('Эндпоинт не найден')
+    except JSONDecodeError:
+        logger.error('Ошибка преобразования в JSON')
+        raise Exception('Ошибка преобразования в JSON')
+    except Exception as error:
+        logger.error(f'API error: {error}')
+        raise Exception(f'API error: {error}')
 
 
 def check_response(response):
-    """Функция для проверки ответа API на корректность."""
-    if type(response) is not dict:
-        logger.error('Отсутствует статус в homeworks')
-        raise TypeError('Отсутствует статус в homeworks')
-    if 'homeworks' not in response.keys():
+    """Проверяет полученный ответ на корректность."""
+    logger.info("Ответ от сервера получен")
+    homeworks_response = response['homeworks']
+    logger.info("Список домашних работ получен")
+    if 'homeworks' not in response:
         logger.error('Отсутствие ключа')
         raise KeyError('Отсутствие ключа')
     if 'current_date' not in response.keys():
@@ -92,7 +106,7 @@ def check_response(response):
     if type(response['homeworks']) is not list:
         logger.error('Список с домашними работами пуст')
         raise TypeError('Список с домашними работами пуст')
-    return response['homeworks'][0]
+    return homeworks_response
 
 
 def parse_status(homework):
@@ -130,7 +144,6 @@ def main():
             if last_message != message:
                 last_message = message
                 send_message(bot, last_message)
-                time.sleep(RETRY_PERIOD)
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
             logger.error(message)
