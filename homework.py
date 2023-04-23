@@ -9,6 +9,7 @@ import requests
 import telegram
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 
@@ -45,7 +46,7 @@ def check_tokens():
     tokens = {
          'practicum_token': PRACTICUM_TOKEN,
          'telegram_token': TELEGRAM_TOKEN,
-         'telegram_chat_id': TELEGRAM_CHAT_ID,
+         'telegram_chat_id': TELEGRAM_CHAT_ID
     }
     for token_key, token_value in tokens.items():
         if token_value is None:
