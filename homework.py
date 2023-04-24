@@ -108,7 +108,7 @@ def check_response(response: dict) -> list:
     homework = homeworks_list[0]
     if not homeworks_list:
         logging.error('Список с домашними работами пуст')
-        raise TypeError('Список с домашними работами пуст')
+        raise ValueError('Список с домашними работами пуст')
     return homework
 
 
