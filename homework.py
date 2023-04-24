@@ -49,7 +49,8 @@ def check_tokens():
     }
     for token_key, token_value in tokens.items():
         if token_value is None:
-            logging.critical(f'{token_key} отсутствует')
+            logger = logging.getLogger(__name__)
+            logger.critical(f'{token_key} отсутствует')
             return False
     return True
 
@@ -97,19 +98,17 @@ def check_response(response: dict) -> list:
     if not isinstance(response, dict):
         logging.error('ответ должен быть словарём')
         raise TypeError('ответ должен быть словарём')
-    try:
-        homeworks_list = response['homeworks']
-    except KeyError:
+    if 'homeworks' not in response:
         logging.error('В ответе API нет ключа "homeworks".')
         raise KeyError('В ответе API нет ключа "homeworks".')
+    homeworks_list = response['homeworks']
     if not isinstance(homeworks_list, list):
         logging.error('Некорректный ответ')
         raise TypeError('Некорректный ответ')
-    try:
-        homework = homeworks_list[0]
-    except IndexError:
+    homework = homeworks_list[0]
+    if not homeworks_list:
         logging.error('Список с домашними работами пуст')
-        raise IndexError('Список с домашними работами пуст')
+        raise TypeError('Список с домашними работами пуст')
     return homework
 
 
