@@ -49,7 +49,6 @@ def check_tokens():
     }
     for token_key, token_value in tokens.items():
         if token_value is None:
-            logger = logging.getLogger(__name__)
             logger.critical(f'{token_key} отсутствует')
             return False
     return True
